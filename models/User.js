@@ -1,18 +1,40 @@
-username
-- string
-- unique
-- required
-- trimmed
-email
-- string
-- required
-- unique
-- must match valid email address (Mongoose matching validation)
-thoughts
-- array of _id values referencing Thought model (self reference)
-friends
-- array of _id values referencing User model (self reference)
+const { Schema, model } = require('mongoose');
+const thoughtSchema = require('/Thought');
+//need reaction?
 
-Schema Settings
+const userSchema = new Schema(
+    {
+        username: {
+            type: String,
+            unique: true,
+            required: true,
+            trim = true,
+        },
+        email: {
+            type: String,
+            required: true,
+            unique: true,
+            match: [/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/]
+            //must match valid email address (Mongoose matching validation)
+        },
+        thoughts: [{
+            type: Schema.Types.ObjectId,
+            ref: 'Thoughts'
+        }],
+        friends: [{
+            type: Schema.Types.ObjectId,
+            ref: 'Users'
+        }]
+    },
+    {
+        toJSON: {
+            virtuals: true,
+            getters: true,
+        },
+        id: false,
+    }
+);
 
-Create a virtual called friendCount that retrieves the length of the user's friends array field on query.
+userSchema.virtual('friendCount').get(function () {
+    return this.friends.length;
+});
