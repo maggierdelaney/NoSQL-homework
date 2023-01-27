@@ -1,20 +1,64 @@
-thoughtText
+const { Schema, model } = require('mongoose');
+const userSchema = require('/User');
 
-String
-Required
-Must be between 1 and 280 characters
-createdAt
+const thoughtSchema = new Schema(
+    {
+        thoughtText: {
+            type: String,
+            required: true,
+            minlength: 1,
+            maxlength: 280,
+        },
+        createdAt: {
+            type: Date,
+            default: Date.now,
+            get: //date getter
+        },
+        username: {
+            type: String,
+            required: true,
+        },
+        reactions: [reactionSchema]
 
-Date
-Set default value to the current timestamp
-Use a getter method to format the timestamp on query
+    },
+    {
+        toJSON: {
+            virtuals: true,
+            getters: true
+        }
+    });
 
-username (The user that created this thought)
-String
-Required
+thoughtSchema.virtual('reactionCount').get(function () {
+    return this.reactions.length;
+});
 
-reactions (These are like replies)
-Array of nested documents created with the reactionSchema
+reactionSchema = new Schema(
+    {
+        reactionId: {
+            type: //ObjectId,
+            default: //new objectid
+        },
+        reactionBody: {
+            type: String,
+            required: true,
+            maxlength: 280
+        },
+        username: {
+            type: String,
+            required: true
+        },
+        createdAt: {
+            type: Date,
+            default: Date.now,
+            get: //date getter
+        }
+    },
+    {
+        toJSON: {
+            getters: true
+        }
+    });
 
-Schema Settings
-Create a virtual called reactionCount that retrieves the length of the thought's reactions array field on query.
+module.exports = Thought;
+
+//This will not be a model, but rather will be used as the `reaction` field's subdocument schema in the `Thought` model.
