@@ -56,7 +56,7 @@ module.exports = {
     //api/thoughts/:thoughtid/reactions
     //POST to create a reaction stored ina single thoughts reactions array
     createReaction(req, res) {
-        Thought.findOneandUpdate(
+        Thought.findOneAndUpdate(
             { _id: req.params.thoughtId },
             { $addToSet: { reactions: req.body } },
             { runValidators: true, new: true }
@@ -72,7 +72,7 @@ module.exports = {
     },
     //DEL to pull and remove a reaction by reactionid value
     deleteReaction(req, res) {
-        Thought.findOneAndUpdate(
+        Thought.findOneAndRemove(
             { _id: req.params.thoughtId },
             { $pull: { reaction: { reactionId: req.params.reactionId } } },
             { runValidators: true, new: true }

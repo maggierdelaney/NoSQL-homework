@@ -1,4 +1,4 @@
-export const users = [
+const users = [
   {
     username: 'user1',
     email: 'email1@email.com'
@@ -17,7 +17,7 @@ export const users = [
   },
 ]
 
-export const thoughts = [
+const thoughts = [
   {
     thoughtText: 'This is a thought',
     username: 'user1'
@@ -36,7 +36,7 @@ export const thoughts = [
   }
 ]
 
-export const reactions = [
+const reactions = [
   {
     reactionBody: 'oh my god!',
     username: 'user1',
@@ -54,3 +54,5 @@ export const reactions = [
     username: 'user4',
   },
 ]
+
+module.exports = { users, thoughts, reactions };

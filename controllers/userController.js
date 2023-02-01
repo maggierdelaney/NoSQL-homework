@@ -1,4 +1,3 @@
-const { ObjectId } = require('mongoose').Types;
 const { User, Thought } = require('../models');
 
 //GET all users
@@ -11,7 +10,7 @@ module.exports = {
     //GET single user by id + thought and friend data
     getOneUser(req, res) {
         User.findOne({ _id: req.params.userId })
-            .select()
+            .select('-__v')
             .then((user) =>
                 !user
                     ? res.status(404).json({ message: 'No user with that ID' })
