@@ -15,7 +15,7 @@ Make sure to have express and mongoose npm packages installed via the command li
 
 ## Usage
 
-Video link:
+Video link: https://drive.google.com/file/d/1dpho51p54t0UEGuUUeRC29uF2fqZ4SOV/view
 
 Please watch the video link for a run-through on how to test the routes.
 
